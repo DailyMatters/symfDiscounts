@@ -11,3 +11,6 @@
 ###< symfony/web-server-bundle ###
 #
 StepByStepDiscounts.md
+
+#No need to store the dabatase file, it should be created on demand.
+var/data.db
