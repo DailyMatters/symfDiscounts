@@ -23,6 +23,12 @@ class Item
     private $product_id;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Order", inversedBy="items")
+     * @ORM\Column(nullable=false)
+     */
+    private $order_id;
+
+    /**
      * @ORM\Column(type="integer")
      */
     private $quantity;
@@ -50,6 +56,18 @@ class Item
     public function setProductId(Product $product_id): self
     {
         $this->product_id = $product_id;
+
+        return $this;
+    }
+
+    public function getOrderId(): ?Order
+    {
+        return $this->order_id;
+    }
+
+    public function setOrderId(?Order $order_id): self
+    {
+        $this->order_id = $order_id;
 
         return $this;
     }

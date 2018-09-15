@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -23,7 +25,7 @@ class Order
     private $customer_id;
 
     /**
-     * @ORM\Column(type="json_array")
+     * @ORM\OneToMany(targetEntity="App\Entity\Item", mappedBy="order_id")
      */
     private $items;
 
@@ -31,6 +33,11 @@ class Order
      * @ORM\Column(type="float")
      */
     private $total;
+
+    public function __construct()
+    {
+   	$this->items= new ArrayCollection();	
+    }
 
     public function getId(): ?int
     {
@@ -49,18 +56,6 @@ class Order
         return $this;
     }
 
-    public function getItems()
-    {
-        return $this->items;
-    }
-
-    public function setItems($items): self
-    {
-        $this->items = $items;
-
-        return $this;
-    }
-
     public function getTotal(): ?float
     {
         return $this->total;
@@ -69,6 +64,37 @@ class Order
     public function setTotal(float $total): self
     {
         $this->total = $total;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Item[]
+     */
+    public function getItems(): Collection
+    {
+        return $this->items;
+    }
+
+    public function addItems(Item $item): self
+    {
+        if (!$this->items->contains($item)) {
+            $this->items[] = $item;
+            $item->setOrderId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeItem(Item $item): self
+    {
+        if ($this->items->contains($item)) {
+            $this->items->removeElement($item);
+            // set the owning side to null (unless already changed)
+            if ($item->getOrderId() === $this) {
+                $item->setOrderId(null);
+            }
+        }
 
         return $this;
     }
