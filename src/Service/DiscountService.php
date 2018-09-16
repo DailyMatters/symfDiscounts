@@ -22,7 +22,46 @@ class DiscountService{
 
 	    $order = $this->applyMinimumAmountDiscount($order);
 
+	    if ($this->haveProductDiscount($order)) {
+	    	$discount += $this->getProductDiscount($order);
+	    }
+
 	    return $discount;
+    }
+
+    private function getProductDiscount(Order $order): float 
+    {
+	//store and array with just the values and select the lowest with the min function 
+	$productPrices = [];
+
+	$items = $order->getIems();
+
+	foreach ($items as $item) {
+	    if($item->getProductId()->getId === 1) {
+	    	$productPrices[] = $item->getProductId()->getUnitPrice();
+	    }
+	}
+
+	return min($productPrices);
+    }
+
+    private function haveProductDiscount(Order $order): bool 
+    {
+    	$toolItems = [];
+
+	$items = $order->getItems();
+
+	foreach ($items as $item) {
+	    if($item->getProductId()->getId() === 1) {
+	    	$toolItems[] = $item;	
+	    }
+	}
+       
+	if (sizeof($toolItems) >= 2) {
+	    return true;
+	}
+
+	return false;	
     }
 
     private function applyMinimumAmountDiscount(Order $order): Order

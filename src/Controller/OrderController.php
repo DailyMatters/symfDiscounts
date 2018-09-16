@@ -40,11 +40,8 @@ class OrderController extends AbstractController
 
 	$discount = $service->checkAppliableDiscount($this->convertDataToOrder($data, $customer, $product));	
 
-	var_dump($discount);die;
-
     	 return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/OrderController.php',
+            'message' => 'The total discount for this order is ' . $discount
         ]);
 
     }
