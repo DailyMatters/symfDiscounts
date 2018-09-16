@@ -23,8 +23,8 @@ class Item
     private $product_id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Order", inversedBy="items")
-     * @ORM\Column(nullable=false)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Order", inversedBy="items", cascade={"persist"}))
+     * @ORM\JoinColumn(nullable=false)
      */
     private $order_id;
 

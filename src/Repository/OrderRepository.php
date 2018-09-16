@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Order;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -14,37 +15,21 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class OrderRepository extends ServiceEntityRepository
 {
-    public function __construct(RegistryInterface $registry)
+
+    private $entityManager;
+
+    public function __construct(RegistryInterface $registry, EntityManagerInterface $entityManager)
     {
+	$this->entityManager = $entityManager;
         parent::__construct($registry, Order::class);
     }
 
-//    /**
-//     * @return Order[] Returns an array of Order objects
-//     */
-    /*
-    public function findByExampleField($value)
+    public function persistOrder(Order $order)
     {
-        return $this->createQueryBuilder('o')
-            ->andWhere('o.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('o.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+	$this->entityManager->persist($order);
+	$this->entityManager->flush();
 
-    /*
-    public function findOneBySomeField($value): ?Order
-    {
-        return $this->createQueryBuilder('o')
-            ->andWhere('o.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+	return new Response('Saved new order with id '.$order->getId());
     }
-    */
+
 }
