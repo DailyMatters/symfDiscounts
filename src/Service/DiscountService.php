@@ -11,6 +11,7 @@ class DiscountService{
 
     const MINIMUM_AMOUNT_DISCOUNT = 5;
     const SWITCH_CATEGORY = 2;
+    const TOOL_CATEGORY = 1;
 
     public function checkAppliableDiscount(Order $order)
     {
@@ -37,7 +38,7 @@ class DiscountService{
 	$items = $order->getIems();
 
 	foreach ($items as $item) {
-	    if($item->getProductId()->getId === 1) {
+	    if($item->getProductId()->getId === self::TOOL_CATEGORY) {
 	    	$productPrices[] = $item->getProductId()->getUnitPrice();
 	    }
 	}
@@ -52,7 +53,7 @@ class DiscountService{
 	$items = $order->getItems();
 
 	foreach ($items as $item) {
-	    if($item->getProductId()->getId() === 1) {
+	    if($item->getProductId()->getId() === self::TOOL_CATEGORY) {
 	    	$toolItems[] = $item;	
 	    }
 	}
