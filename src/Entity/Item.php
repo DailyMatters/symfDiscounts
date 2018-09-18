@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ItemRepository")
@@ -19,6 +20,7 @@ class Item
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Product", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank()
      */
     private $product_id;
 
@@ -30,16 +32,19 @@ class Item
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank()
      */
     private $quantity;
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\NotBlank()
      */
     private $unit_price;
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\NotBlank()
      */
     private $total;
 
