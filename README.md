@@ -6,7 +6,10 @@ To install the project:
 
 2. After having the project installed, create the database schema and load the fixtures with:
 
-`./bin/create_database.sh`
+`cd discounts
+./bin/create_database.sh`
+
+The Doctrine prompt will ask you a couple of questions, just answer yes on both of them.
 
 3. To launch the project, use Symfony built in server with:
 
