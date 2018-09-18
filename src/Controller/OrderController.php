@@ -10,7 +10,9 @@ use App\Service\DiscountService;
 use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class OrderController extends AbstractController
 {
@@ -34,11 +36,11 @@ class OrderController extends AbstractController
     /**
      * @Route("/order/discount", name="discount")
      */
-    public function discount(Request $request, DiscountService $service, CustomerRepository $customer, ProductRepository $product)
+    public function discount(Request $request, DiscountService $service, CustomerRepository $customer, ProductRepository $product, ValidatorInterface $validator)
     {
 	$data = json_decode($request->getContent(), true);
 
-	$discount = $service->checkAppliableDiscount($this->convertDataToOrder($data, $customer, $product));	
+	$discount = $service->checkAppliableDiscount($this->convertDataToOrder($data, $customer, $product, $validator));	
 
     	 return $this->json([
             'message' => 'The total discount for this order is ' . $discount
@@ -46,8 +48,7 @@ class OrderController extends AbstractController
 
     }
 
-
-    private function convertDataToOrder(array $data, CustomerRepository $customerRepository, ProductRepository $productRepository): Order 
+    private function convertDataToOrder(array $data, CustomerRepository $customerRepository, ProductRepository $productRepository, ValidatorInterface $validator): Order 
     {
 	$order = new Order();
 
@@ -65,6 +66,14 @@ class OrderController extends AbstractController
 
 		$product = $productRepository->findOneBy(['product_id' => $element['product-id']]);
 		$item->setProductId($product);
+
+		//validate the item
+		$errors = $validator->validate($item);
+		if( count($errors) > 0) {
+		    $errorString = (string) $errors;	
+
+		    throw new \Exception('Invalid Item: ' . $errorString);
+		}
 
 		$order->addItems($item);
 	}
