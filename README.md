@@ -1,4 +1,6 @@
-To install the project:
+### README
+
+#### To install the project:
 
 1. Clone the repository with:
 
@@ -36,7 +38,7 @@ curl -i -H "Content-Type: application/json" --request POST -d '
 
 --------
 
-Regarding the project itself.
+#### Regarding the project itself an my implementation.
 
 1. It is clearly missing unit testing. I'm pretty conscious of that, I would also like to mention that I haven't implemented them due to time issues, but if you look at other repos of mine you can see that I can do them (ex: https://github.com/DailyMatters/redditSearch)
 
