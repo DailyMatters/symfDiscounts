@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
-php console doctrine:migrations:migrate
-php console doctrine:fixtures:load --purge-with-truncate
+php bin/console doctrine:migrations:migrate
+php bin/console doctrine:fixtures:load --purge-with-truncate
