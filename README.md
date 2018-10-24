@@ -36,9 +36,9 @@ curl -i -H "Content-Type: application/json" --request POST -d '
 }' http://127.0.0.1:8000/order/discount
 `
 
---------
-
 5. Use `.bin/phpunit` to run the unit tests.
+
+---------
 
 #### Regarding the project itself an my implementation.
 

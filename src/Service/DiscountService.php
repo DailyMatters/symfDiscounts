@@ -7,7 +7,6 @@ use App\Repository\CustomerRepository;
 
 class DiscountService{
 
-    const PREMIUM_REVENUE = 100;
     const PREMIUM_DISCOUNT = 0.1;
 
     const MINIMUM_AMOUNT_DISCOUNT = 5;
