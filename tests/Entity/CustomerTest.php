@@ -7,10 +7,6 @@ use PHPUnit\Framework\TestCase;
 
 class CustomerTest extends TestCase
 {
-    public function testForTesting()
-    {
-        $this->assertTrue(true);
-    }
 
     public function testPremiumCustomer()
     {
