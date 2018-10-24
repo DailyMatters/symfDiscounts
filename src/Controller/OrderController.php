@@ -40,7 +40,7 @@ class OrderController extends AbstractController
     {
 	$data = json_decode($request->getContent(), true);
 
-	$discount = $service->checkAppliableDiscount($this->convertDataToOrder($data, $customer, $product, $validator));	
+	$discount = $service->checkAppliableDiscount($this->convertDataToOrder($data, $customer, $product, $validator), $customer);	
 
     	 return $this->json([
             'message' => 'The total discount for this order is ' . $discount

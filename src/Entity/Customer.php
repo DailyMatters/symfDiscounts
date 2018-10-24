@@ -114,4 +114,13 @@ class Customer
 
         return $this;
     }
+
+    public function isPremiumCustomer()
+    {
+	if($this->getRevenue() >= 100){
+	    return true;
+	}
+
+	return false;
+    }
 }

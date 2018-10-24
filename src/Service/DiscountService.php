@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\Order;
+use App\Repository\CustomerRepository;
 
 class DiscountService{
 
@@ -13,11 +14,13 @@ class DiscountService{
     const SWITCH_CATEGORY = 2;
     const TOOL_CATEGORY = 1;
 
-    public function checkAppliableDiscount(Order $order)
+    public function checkAppliableDiscount(Order $order, CustomerRepository $repository)
     {
 	    $discount = 0;
 
-	    if ($this->isPremiumCustomer($order)) {
+	    $customer = $repository->findOneBy(['id' => $order->getCustomerId()]);
+
+	    if ($customer->isPremiumCustomer()) {
 	    	$discount = $this->getPremiumCustomerDiscountValue($order);
 	    }
 
@@ -79,17 +82,6 @@ class DiscountService{
 	}
 
 	return $order;
-    }
-
-    private function isPremiumCustomer(Order $order): bool
-    {
-    	$customer = $order->getCustomerId();
-
-	if($customer->getRevenue() >= self::PREMIUM_REVENUE){
-	   return true;
-	}
-
-	return false;
     }
 
     private function getPremiumCustomerDiscountValue(Order $order): float

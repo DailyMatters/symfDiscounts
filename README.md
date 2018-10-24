@@ -17,7 +17,7 @@ The Doctrine prompt will ask you a couple of questions, just answer yes on both 
 
 `php bin/console server:run`
 
-4 From here you can either use Postman to make requests to `http://127.0.0.1:8002/order/discount` (you might have to change the port according to the output off the server:run command). Or, if you're like me and are battling with a striped down version of Linux you can use cUrl for this:
+4. From here you can either use Postman to make requests to `http://127.0.0.1:8002/order/discount` (you might have to change the port according to the output off the server:run command). Or, if you're like me and are battling with a striped down version of Linux you can use cUrl for this:
 
 `
 curl -i -H "Content-Type: application/json" --request POST -d '	
@@ -37,6 +37,8 @@ curl -i -H "Content-Type: application/json" --request POST -d '
 `
 
 --------
+
+5. Use `.bin/phpunit` to run the unit tests.
 
 #### Regarding the project itself an my implementation.
 

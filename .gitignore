@@ -14,3 +14,8 @@ StepByStepDiscounts.md
 
 #No need to store the dabatase file, it should be created on demand.
 var/data.db
+
+###> symfony/phpunit-bridge ###
+.phpunit
+/phpunit.xml
+###< symfony/phpunit-bridge ###
