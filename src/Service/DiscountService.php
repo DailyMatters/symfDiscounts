@@ -5,7 +5,7 @@ namespace App\Service;
 use App\Entity\Order;
 use App\Repository\CustomerRepository;
 
-class DiscountService{
+class DiscountService implements DiscountServiceInterface{
 
     const PREMIUM_DISCOUNT = 0.1;
 
@@ -32,7 +32,7 @@ class DiscountService{
 	    return $discount;
     }
 
-    private function getProductDiscount(Order $order): float 
+    public function getProductDiscount(Order $order): float 
     {
 	//store and array with just the values and select the lowest with the min function 
 	$productPrices = [];
@@ -48,7 +48,7 @@ class DiscountService{
 	return min($productPrices);
     }
 
-    private function haveProductDiscount(Order $order): bool 
+    public function haveProductDiscount(Order $order): bool 
     {
     	$toolItems = [];
 
@@ -67,7 +67,7 @@ class DiscountService{
 	return false;	
     }
 
-    private function applyMinimumAmountDiscount(Order $order): Order
+    public function applyMinimumAmountDiscount(Order $order): Order
     {
 	$items = $order->getItems();
 	
@@ -83,7 +83,7 @@ class DiscountService{
 	return $order;
     }
 
-    private function getPremiumCustomerDiscountValue(Order $order): float
+    public function getPremiumCustomerDiscountValue(Order $order): float
     {
 	    $orderTotal = $order->getTotal();
 

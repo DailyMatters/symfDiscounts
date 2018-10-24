@@ -8,7 +8,7 @@ use App\Repository\CustomerRepository;
 use App\Repository\ProductRepository;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-class OrderService{
+class OrderService implements OrderServiceInterface{
 
     public function convertDataToOrder(array $data, CustomerRepository $customerRepository, ProductRepository $productRepository, ValidatorInterface $validator): Order 
     {

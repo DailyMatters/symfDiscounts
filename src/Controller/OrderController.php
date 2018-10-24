@@ -6,8 +6,8 @@ use App\Entity\Order;
 use App\Entity\Item;
 use App\Repository\CustomerRepository;
 use App\Repository\OrderRepository;
-use App\Service\DiscountService;
-use App\Service\OrderService;
+use App\Service\DiscountServiceInterface;
+use App\Service\OrderServiceInterface;
 use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,7 +25,7 @@ class OrderController extends AbstractController
 		OrderRepository $orderRepository, 
 		CustomerRepository $customerRepository, 
 		ProductRepository $productRepository,
-		OrderService $orderService
+		OrderServiceInterface $orderService
 	)
     {
 	$data = json_decode($request->getContent(), true);
@@ -45,11 +45,11 @@ class OrderController extends AbstractController
      */
 	public function discount(
 		Request $request, 
-		DiscountService $discountService, 
+		DiscountServiceInterface $discountService, 
 		CustomerRepository $customer, 
 		ProductRepository $product, 
 		ValidatorInterface $validator,
-		OrderService $orderService
+		OrderServiceInterface $orderService
 	)
     {
 	$data = json_decode($request->getContent(), true);
