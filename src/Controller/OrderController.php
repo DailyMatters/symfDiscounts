@@ -22,7 +22,7 @@ class OrderController extends AbstractController
      */
 	public function index(
 		Request $request, 
-		OrderRepository $repository, 
+		OrderRepository $orderRepository, 
 		CustomerRepository $customerRepository, 
 		ProductRepository $productRepository,
 		OrderService $orderService
@@ -32,7 +32,7 @@ class OrderController extends AbstractController
 
 	$order = $orderService->convertDataToOrder($data, $customerRepository, $productRepository);
 
-	$repository->persistOrder($order);	
+	$orderRepository->persistOrder($order);	
 
         return $this->json([
             'message' => 'Welcome to your new controller!',
@@ -45,7 +45,7 @@ class OrderController extends AbstractController
      */
 	public function discount(
 		Request $request, 
-		DiscountService $service, 
+		DiscountService $discountService, 
 		CustomerRepository $customer, 
 		ProductRepository $product, 
 		ValidatorInterface $validator,
@@ -54,7 +54,7 @@ class OrderController extends AbstractController
     {
 	$data = json_decode($request->getContent(), true);
 
-	$discount = $service->checkAppliableDiscount($orderService->convertDataToOrder($data, $customer, $product, $validator), $customer);	
+	$discount = $discountService->checkAppliableDiscount($orderService->convertDataToOrder($data, $customer, $product, $validator), $customer);	
 
     	 return $this->json([
             'message' => 'The total discount for this order is ' . $discount
