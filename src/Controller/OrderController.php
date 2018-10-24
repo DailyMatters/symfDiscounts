@@ -17,29 +17,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class OrderController extends AbstractController
 {
-    /**
-     * @Route("/order", name="order")
-     */
-	public function index(
-		Request $request, 
-		OrderRepository $orderRepository, 
-		CustomerRepository $customerRepository, 
-		ProductRepository $productRepository,
-		OrderServiceInterface $orderService
-	)
-    {
-	$data = json_decode($request->getContent(), true);
-
-	$order = $orderService->convertDataToOrder($data, $customerRepository, $productRepository);
-
-	$orderRepository->persistOrder($order);	
-
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/OrderController.php',
-        ]);
-    }
-
+  
     /**
      * @Route("/order/discount", name="discount")
      */

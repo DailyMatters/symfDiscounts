@@ -47,3 +47,19 @@ curl -i -H "Content-Type: application/json" --request POST -d '
 2. Validation wise, teh implementation is pretty lacking. I did use the Symfony validation package to implement validations through annotations, but those are already being caught, and errors are being triggered by the setter methods through type hinting.
 
 3. The implementation of the discount system is dependant on a main method that trigger all the different discount options. This is a method that works, but is a nightmare to test. Being tightly coupled to the manager method, all the private methods that have the logic for the discounts are practically untestable.
+
+-----------
+
+### Refactor
+
+After recognizing the issues with this project. The following steps were taken to refactor:
+
+1. isPremiumCustomer() method was removed from the discount logic and added to the customer logic where it should be. Unit testing was added for it.
+
+2. ConvertDataToOrder() method was moved to a OrderService. Unit tests were added for it.
+
+3. Interfaces for services were added and stared to get used.
+
+4. A lot of unused code was removed.
+
+MOre refactors are to come.
