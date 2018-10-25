@@ -38,16 +38,6 @@ curl -i -H "Content-Type: application/json" --request POST -d '
 
 5. Use `.bin/phpunit` to run the unit tests.
 
----------
-
-#### Regarding the project itself and my first implementation.
-
-1. It is clearly missing unit testing. I'm pretty conscious of that, I would also like to mention that I haven't implemented them due to time issues, but if you look at other repos of mine you can see that I can do them (ex: https://github.com/DailyMatters/redditSearch)
-
-2. Validation wise, teh implementation is pretty lacking. I did use the Symfony validation package to implement validations through annotations, but those are already being caught, and errors are being triggered by the setter methods through type hinting.
-
-3. The implementation of the discount system is dependant on a main method that trigger all the different discount options. This is a method that works, but is a nightmare to test. Being tightly coupled to the manager method, all the private methods that have the logic for the discounts are practically untestable.
-
 -----------
 
 ### Refactor
@@ -66,4 +56,20 @@ After recognizing the issues with this project. The following steps were taken t
 
 6. I implemented the plan listed on 5. To add a new discount type, We have to create a new class under /Services, make it implement `DiscountInterface`, and implement the `check()` method, that checks if the discount is applicable do that order and the `apply()` method that aplies the discount to the order.
 
-7. The next step will be to add as much tests as possible to this application.
+7. Add tests to DiscountFactory.
+
+I think these steps might cover most of the issues with my inicial implementation. Following SOLID principles like single responsibility, opening the code for extension and interface segregation. The code is by no means fully covered with unit tests, but I started using them in some of the places I refactored so I ensure that future developments don't break the already working code.
+
+---------
+
+Just for reference:
+
+>#### Regarding the project itself and my first implementation.
+>
+>1. It is clearly missing unit testing. I'm pretty conscious of that, I would also like to mention that I haven't implemented them due to time issues, but if you look at other repos of mine you can see that I can do them (ex: https://github.com/DailyMatters/redditSearch)
+>
+>2. Validation wise, teh implementation is pretty lacking. I did use the Symfony validation package to implement validations through annotations, but those are already being caught, and errors are being triggered by the setter methods through type hinting.
+>
+>3. The implementation of the discount system is dependant on a main method that trigger all the different discount options. This is a method that works, but is a nightmare to test. Being tightly coupled to the manager method, all the private methods that have the logic for the discounts are practically untestable.
+
+
