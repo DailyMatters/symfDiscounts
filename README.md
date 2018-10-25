@@ -62,4 +62,6 @@ After recognizing the issues with this project. The following steps were taken t
 
 4. A lot of unused code was removed.
 
-MOre refactors are to come.
+5. Next, the biggest part of the refactor. I needed to separate the logic for the discount calculation. Up until now all the logic was on a single file. My first thought to do this was to create a DiscountInterface and then create a new class for each different discount type. All these new discount classes would implement DiscountInterface. Then I would create some sort of a Factory so I can access all the different discount from my controller.
+
+6. I implemented the plan listed on 5. To add a new discount type, We have to create a new class under /Services, make it implement `DiscountInterface`, and implement the `check()` method, that checks if the discount is applicable do that order and the `apply()` method that aplies the discount to the order.

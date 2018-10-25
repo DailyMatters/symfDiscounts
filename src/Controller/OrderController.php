@@ -6,7 +6,6 @@ use App\Entity\Order;
 use App\Entity\Item;
 use App\Repository\CustomerRepository;
 use App\Repository\OrderRepository;
-use App\Service\DiscountServiceInterface;
 use App\Service\OrderServiceInterface;
 use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use App\Service\DiscountFactory;
 
 class OrderController extends AbstractController
 {
@@ -23,7 +23,7 @@ class OrderController extends AbstractController
      */
 	public function discount(
 		Request $request, 
-		DiscountServiceInterface $discountService, 
+		DiscountFactory $discountFactory, 
 		CustomerRepository $customer, 
 		ProductRepository $product, 
 		ValidatorInterface $validator,
@@ -31,12 +31,16 @@ class OrderController extends AbstractController
 	)
     {
 	$data = json_decode($request->getContent(), true);
+	$order = $orderService->convertDataToOrder($data, $customer, $product, $validator);
 
-	$discount = $discountService->checkAppliableDiscount($orderService->convertDataToOrder($data, $customer, $product, $validator), $customer);	
+	foreach ($discountFactory->getDiscounts() as $discount) {
+            if($discount->check($order, $customer)){
+                $order = $discount->apply($order);
+            }
+        }
 
-    	 return $this->json([
-            'message' => 'The total discount for this order is ' . $discount
-        ]);
-
+	return $this->json([
+	    'message' => 'Order total: ' . $order->getTotal()
+	]);
     }
 }
