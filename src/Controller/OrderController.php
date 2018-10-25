@@ -21,14 +21,14 @@ class OrderController extends AbstractController
     /**
      * @Route("/order/discount", name="discount")
      */
-	public function discount(
-		Request $request, 
-		DiscountFactory $discountFactory, 
-		CustomerRepository $customer, 
-		ProductRepository $product, 
-		ValidatorInterface $validator,
-		OrderServiceInterface $orderService
-	)
+    public function discount(
+	Request $request, 
+	DiscountFactory $discountFactory, 
+	CustomerRepository $customer, 
+	ProductRepository $product, 
+	ValidatorInterface $validator,
+	OrderServiceInterface $orderService
+    )
     {
 	$data = json_decode($request->getContent(), true);
 	$order = $orderService->convertDataToOrder($data, $customer, $product, $validator);
