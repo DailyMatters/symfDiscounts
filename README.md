@@ -40,7 +40,7 @@ curl -i -H "Content-Type: application/json" --request POST -d '
 
 ---------
 
-#### Regarding the project itself an my implementation.
+#### Regarding the project itself and my first implementation.
 
 1. It is clearly missing unit testing. I'm pretty conscious of that, I would also like to mention that I haven't implemented them due to time issues, but if you look at other repos of mine you can see that I can do them (ex: https://github.com/DailyMatters/redditSearch)
 
@@ -54,14 +54,16 @@ curl -i -H "Content-Type: application/json" --request POST -d '
 
 After recognizing the issues with this project. The following steps were taken to refactor:
 
-1. isPremiumCustomer() method was removed from the discount logic and added to the customer logic where it should be. Unit testing was added for it.
+1. `isPremiumCustomer()` method was removed from the discount logic and added to the customer logic where it should be. Unit testing was added for it.
 
-2. ConvertDataToOrder() method was moved to a OrderService. Unit tests were added for it.
+2. `ConvertDataToOrder()` method was moved to a OrderService. Unit tests were added for it.
 
-3. Interfaces for services were added and stared to get used.
+3. Interfaces for services were added and started to get used.
 
 4. A lot of unused code was removed.
 
 5. Next, the biggest part of the refactor. I needed to separate the logic for the discount calculation. Up until now all the logic was on a single file. My first thought to do this was to create a DiscountInterface and then create a new class for each different discount type. All these new discount classes would implement DiscountInterface. Then I would create some sort of a Factory so I can access all the different discount from my controller.
 
 6. I implemented the plan listed on 5. To add a new discount type, We have to create a new class under /Services, make it implement `DiscountInterface`, and implement the `check()` method, that checks if the discount is applicable do that order and the `apply()` method that aplies the discount to the order.
+
+7. The next step will be to add as much tests as possible to this application.
